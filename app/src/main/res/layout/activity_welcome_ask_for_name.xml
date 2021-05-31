@@ -53,7 +53,8 @@
             android:layout_marginBottom="25dp"
             android:background="@color/white"
             android:textSize="30dp"
-            android:padding="3dp"/>
+            android:padding="3dp"
+            android:textColor="@color/black"/>
 
         <ImageView
             android:id="@+id/btnMasuk"
