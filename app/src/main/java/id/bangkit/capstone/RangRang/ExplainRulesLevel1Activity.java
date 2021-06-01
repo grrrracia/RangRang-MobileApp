@@ -2,6 +2,7 @@ package id.bangkit.capstone.RangRang;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +19,9 @@ public class ExplainRulesLevel1Activity extends AppCompatActivity {
         btnStartLevel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Mulai Level 1
+                //Start Level 1
+                Intent startLevel1 = new Intent(ExplainRulesLevel1Activity.this, Level1Activity.class);
+                startActivity(startLevel1);
             }
         });
     }
