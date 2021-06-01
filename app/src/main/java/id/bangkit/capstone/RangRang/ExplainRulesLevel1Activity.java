@@ -20,6 +20,9 @@ public class ExplainRulesLevel1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Start Level 1
+                //Start Room Scan
+//                **RoomScan Code**
+//                After room scan, then start level 1 intent
                 Intent startLevel1 = new Intent(ExplainRulesLevel1Activity.this, Level1Activity.class);
                 startActivity(startLevel1);
             }
