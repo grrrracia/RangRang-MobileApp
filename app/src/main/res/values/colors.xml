@@ -16,4 +16,10 @@
     <color name="MaximumBluePurple">#BDB2FF</color>
     <color name="Mauve">#FFC6FF</color>
     <color name="BabyPowder">#FFFFFC</color>
+    <color name="CyanProcess">#49BAEC</color>
+    <color name="GreenPantone">#26A33E</color>
+    <color name="BabyBlue">#75C9F1</color>
+    <color name="AndroidGreen">#A4C722</color>
+    <color name="UranianBlue">#A2D9F7</color>
+    <color name="AliceBlue">#DAEBF3</color>
 </resources>

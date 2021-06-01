@@ -6,28 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WelcomeAskForName"
-    android:background="@color/DeepChampagne">
+    android:background="@drawable/welcomebg">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/welcomeimage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:background="@drawable/box"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/greenbox"
         android:orientation="vertical"
         android:padding="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp">
 
         <TextView
@@ -35,6 +26,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/glacialindifference_regular"
             android:text="Halo,"
+            android:textColor="@color/BabyPowder"
             android:textSize="25dp" />
 
         <TextView
@@ -42,6 +34,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/glacialindifference_regular"
             android:text="masukan nama kamu:"
+            android:textColor="@color/BabyPowder"
             android:textSize="25dp" />
 
         <EditText
@@ -52,9 +45,9 @@
             android:layout_marginTop="35dp"
             android:layout_marginBottom="25dp"
             android:background="@color/white"
-            android:textSize="30dp"
             android:padding="3dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="30dp" />
 
         <ImageView
             android:id="@+id/btnMasuk"
