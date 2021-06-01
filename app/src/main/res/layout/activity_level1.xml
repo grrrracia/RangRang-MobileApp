@@ -4,27 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ExplainRulesLevel1Activity">
+    tools:context=".Level1Activity">
 
     <TextView
-        android:id="@+id/tvRulesLevel1"
+        android:id="@+id/tvColorToFind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="244dp"
-        android:text="peraturan dari level 1"
+        android:layout_marginTop="192dp"
+        android:text="Placeholder Color"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnStartLevel1"
+        android:id="@+id/btnLevel1Check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lanjut!"
+        android:text="Check"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRulesLevel1" />
+        app:layout_constraintTop_toBottomOf="@+id/tvColorToFind" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

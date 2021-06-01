@@ -32,14 +32,16 @@ public class HomeActivity extends AppCompatActivity {
         btnLevel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Download model deteksi warna
+                Intent goToRulesLvl1 = new Intent(HomeActivity.this, ExplainRulesLevel1Activity.class);
+                startActivity(goToRulesLvl1);
             }
         });
 
         btnLevel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Download model deteksi benda
+                Intent goToRulesLvl2 = new Intent(HomeActivity.this, ExplainRulesLevel2Activity.class);
+                startActivity(goToRulesLvl2);
             }
         });
     }
