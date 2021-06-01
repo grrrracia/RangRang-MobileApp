@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/logoblueback"
         android:supportsRtl="true"
         android:theme="@style/Theme.RangRang">
-        <activity android:name=".ExplainRulesActivity"></activity>
+        <activity android:name=".ExplainRulesLevel2Activity"></activity>
+        <activity android:name=".ExplainRulesLevel1Activity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".WelcomeAskForName" />
         <activity android:name=".MainActivity">
