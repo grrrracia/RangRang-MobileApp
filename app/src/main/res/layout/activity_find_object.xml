@@ -4,28 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Level1Activity">
+    tools:context=".findObjectActivity">
 
     <TextView
-        android:id="@+id/tvColorToFind"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvFindThisObject"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="192dp"
-        android:text="Placeholder Color"
-        android:textSize="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="220dp"
+        android:text="Placeholder Object Name"
+        android:textAlignment="center"
+        android:textSize="55dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <Button
-        android:id="@+id/btnLevel1Check"
+        android:id="@+id/btnCheckObject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check"
+        android:text="Check!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvColorToFind" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvFindThisObject" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

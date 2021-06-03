@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         btnLevel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToRulesLvl1 = new Intent(HomeActivity.this, ExplainRulesLevel1Activity.class);
+                Intent goToRulesLvl1 = new Intent(HomeActivity.this, PreLevel1Activity.class);
                 startActivity(goToRulesLvl1);
             }
         });
@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         btnLevel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToRulesLvl2 = new Intent(HomeActivity.this, ExplainRulesLevel2Activity.class);
+                Intent goToRulesLvl2 = new Intent(HomeActivity.this, PreLevel2Activity.class);
                 startActivity(goToRulesLvl2);
             }
         });

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class WelcomeAskForName extends AppCompatActivity {
+public class WelcomeAskForNameActivity extends AppCompatActivity {
     ImageView btnMasuk;
     EditText etNama;
 
@@ -26,7 +26,7 @@ public class WelcomeAskForName extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = etNama.getText().toString();
-                Intent goToHome = new Intent(WelcomeAskForName.this, HomeActivity.class);
+                Intent goToHome = new Intent(WelcomeAskForNameActivity.this, HomeActivity.class);
                 goToHome.putExtra("GivenName", name);
                 startActivity(goToHome);
             }

@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         Handler handler = new Handler();
-        Intent intent = new Intent(MainActivity.this, WelcomeAskForName.class);
+        Intent intent = new Intent(MainActivity.this, WelcomeAskForNameActivity.class);
         final Runnable r = new Runnable() {
             @Override
             public void run() {
