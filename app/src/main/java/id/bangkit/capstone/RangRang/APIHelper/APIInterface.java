@@ -1,6 +1,7 @@
 package id.bangkit.capstone.RangRang.APIHelper;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Header;
@@ -12,10 +13,18 @@ public interface APIInterface {
 
     @Multipart
     @POST("od-api/video/")
-    Call<ResponseBody> fileUpload(
-            @Header("Content-Disposition") String contentDisposition,
+    Call<ResponseBody> videoUpload(
+//            @Header("Content-Disposition") String contentDisposition,
             @Part MultipartBody.Part file
     );
+
+    @Multipart
+    @POST("od-api/picture/")
+    Call<ResponseBody> photoUpload(
+//            @Header("Content-Disposition") String contentDisposition,
+            @Part MultipartBody.Part file
+//            @Part("file") RequestBody file
+            );
 }
 
 //response = requests.post('http://35.222.141.247:8080/od-api/video/',

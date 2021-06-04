@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.FileUtils;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import id.bangkit.capstone.RangRang.APIHelper.APIInterface;
 import id.bangkit.capstone.RangRang.APIHelper.RetrofitClient;
@@ -68,15 +71,20 @@ public class PreLevel1Activity extends AppCompatActivity {
             String fullPath = videoUri.getPath() + ".mp4";
 //            videoView.setVideoURI(videoUri);
 
-//            File file = new File(videoUri.getPath());
-            File file = new File(fullPath);
+            File file = new File(videoUri.getPath());
+//            File file = new File(fullPath);
             RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
             System.out.println(fileToUpload);
-            String contentDisposition = "Content-Disposition: attachment; filename = "+fullPath;
-            System.out.println(contentDisposition);
 
-            Call<ResponseBody> call = mApiService.fileUpload(contentDisposition, fileToUpload);
+//            String contentDisposition = "Content-Disposition: attachment; filename = "+fullPath;
+//            System.out.println(contentDisposition);
+
+//            Call<ResponseBody> call = mApiService.videoUpload(contentDisposition, fileToUpload);
+
+            Call<ResponseBody> call = mApiService.videoUpload(fileToUpload);
+
+
             System.out.println(call);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -94,8 +102,10 @@ public class PreLevel1Activity extends AppCompatActivity {
                 }
             });
 
+
             Intent startLevel1 = new Intent(PreLevel1Activity.this, findColorActivity.class);
             startActivity(startLevel1);
         }
     }
-}
+
+    }
