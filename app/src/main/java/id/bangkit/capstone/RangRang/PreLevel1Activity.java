@@ -65,14 +65,18 @@ public class PreLevel1Activity extends AppCompatActivity {
             Uri videoUri = intent.getData();
             System.out.println(videoUri);
             System.out.println(videoUri.getPath());
+            String fullPath = videoUri.getPath() + ".mp4";
 //            videoView.setVideoURI(videoUri);
 
-            File file = new File(videoUri.getPath());
+//            File file = new File(videoUri.getPath());
+            File file = new File(fullPath);
             RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("photo", file.getName(), requestBody);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
             System.out.println(fileToUpload);
+            String contentDisposition = "Content-Disposition: attachment; filename = "+fullPath;
+            System.out.println(contentDisposition);
 
-            Call<ResponseBody> call = mApiService.fileUpload(fileToUpload);
+            Call<ResponseBody> call = mApiService.fileUpload(contentDisposition, fileToUpload);
             System.out.println(call);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override

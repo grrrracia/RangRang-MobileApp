@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Intent fromWelcome = getIntent();
         String myName = fromWelcome.getStringExtra("GivenName");
-        String welcomeText = "Halo "+myName+" !";
+        String welcomeText = myName+" !";
 
         tvHelloText = findViewById(R.id.tvHaloNama);
         tvHelloText.setText(welcomeText);

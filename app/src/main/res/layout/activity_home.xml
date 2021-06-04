@@ -8,17 +8,31 @@
     android:background="@drawable/homebg">
 
     <TextView
+        android:id="@+id/tvHalo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/glacialindifference_regular"
+        android:text="Halo"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/tvHaloNama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/glacialindifference_regular"
-        android:text="Halo RangRang!"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="88dp"
+        android:fontFamily="@font/glacialindifference_bold"
+        android:text="RangRang!"
         android:textColor="@color/black"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.254"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toEndOf="@+id/tvHalo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
