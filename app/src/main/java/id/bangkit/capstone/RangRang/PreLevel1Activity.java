@@ -68,6 +68,7 @@ public class PreLevel1Activity extends AppCompatActivity {
             Uri videoUri = intent.getData();
             System.out.println(videoUri);
             System.out.println(videoUri.getPath());
+            System.out.println(videoUri.toString());
             String fullPath = videoUri.getPath() + ".mp4";
 //            videoView.setVideoURI(videoUri);
 
