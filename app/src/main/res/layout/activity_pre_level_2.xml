@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PreLevel2Activity">
+    tools:context=".PreLevel2Activity"
+    android:background="@drawable/skybg">
 
     <TextView
         android:id="@+id/tvRulesLevel2"
@@ -13,9 +14,10 @@
         android:layout_marginTop="244dp"
         android:text="peraturan dari level 2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="25dp"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btnStartLevel2"

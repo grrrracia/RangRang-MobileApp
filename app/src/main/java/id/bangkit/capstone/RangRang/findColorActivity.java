@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +48,7 @@ import retrofit2.Response;
 public class findColorActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     Button btnCheck;
+    TextView tvFindThisColor;
 
     Context mContext;
 
@@ -55,6 +57,7 @@ public class findColorActivity extends AppCompatActivity {
     JSONObject jsonValues;
 
     ArrayList<String> arrayColors = new ArrayList<String>();
+    ArrayList<String> receivedArrayColors = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +65,23 @@ public class findColorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_color);
 
         btnCheck = findViewById(R.id.btnCheckColor);
+        tvFindThisColor = findViewById(R.id.tvFindThisColor);
         mContext = this;
 
-        btnCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mApiService = UtilsApi.getAPIService();
-                takePicture();
-            }
-        });
+        receivedArrayColors = (ArrayList<String>) getIntent().getSerializableExtra("DetectedColors");
+
+        for (int i = 0; i < receivedArrayColors.size(); i++){
+            String currentColor = receivedArrayColors.get(i);
+            tvFindThisColor.setText(currentColor);
+
+            btnCheck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mApiService = UtilsApi.getAPIService();
+                    takePicture();
+                }
+            });
+        }
     }
 
     private static final int pic_id = 123;
@@ -114,7 +125,7 @@ public class findColorActivity extends AppCompatActivity {
                     try {
                         String jsonString = response.body().string();
                         jsonValues = new JSONObject(jsonString);
-                        JSONArray arr_temp = jsonValues.getJSONArray("object");
+                        JSONArray arr_temp = jsonValues.getJSONArray("object");//Change to Color Later
                         for (int i = 0; i < arr_temp.length(); i++)
                             arrayColors.add(arr_temp.getString(i));
                         System.out.println("arraylistny");

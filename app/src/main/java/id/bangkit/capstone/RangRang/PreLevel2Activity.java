@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +36,7 @@ public class PreLevel2Activity extends AppCompatActivity {
     static final int REQUEST_VIDEO_CAPTURE = 1;
 
     Button btnStartLevel2;
+    TextView tvPrompt;
 
     Context mContext;
 
@@ -50,6 +52,8 @@ public class PreLevel2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_pre_level_2);
         mContext = this;
         btnStartLevel2 = findViewById(R.id.btnStartLevel2);
+        tvPrompt = findViewById(R.id.tvRulesLevel2);
+
         btnStartLevel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +94,7 @@ public class PreLevel2Activity extends AppCompatActivity {
             System.out.println(fileToUpload);
 
             Call<ResponseBody> call = mApiService.videoObjectUpload(fileToUpload);
+            tvPrompt.setText("Please Wait While We Analyze the Video");
 
 
             System.out.println(call);
@@ -106,6 +111,13 @@ public class PreLevel2Activity extends AppCompatActivity {
                         System.out.println("arraylistny");
                         for (int i = 0; i < arrayObjects.size(); i++) System.out.println(arrayObjects.get(i));
 
+                        if (arrayObjects.size() < 2){
+                            tvPrompt.setText("Please Scan the Room Again");
+                        }else{
+                            Intent startLevel2 = new Intent(PreLevel2Activity.this, findObjectActivity.class);
+                            startLevel2.putExtra("DetectedObjects", arrayObjects);
+                            startActivity(startLevel2);
+                        }
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -121,9 +133,6 @@ public class PreLevel2Activity extends AppCompatActivity {
                 }
             });
 
-
-            Intent startLevel2 = new Intent(PreLevel2Activity.this, findObjectActivity.class);
-            startActivity(startLevel2);
         }
     }
 }

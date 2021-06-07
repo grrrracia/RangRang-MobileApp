@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +39,8 @@ public class PreLevel1Activity extends AppCompatActivity {
 
     Context mContext;
 
+    TextView tvPrompt;
+
     APIInterface mApiService;
     Call<ResponseBody> uploadFile;
     JSONObject jsonValues;
@@ -50,6 +53,8 @@ public class PreLevel1Activity extends AppCompatActivity {
         setContentView(R.layout.activity_pre_level_1);
         mContext = this;
         btnStartLevel1 = findViewById(R.id.btnStartLevel1);
+        tvPrompt = findViewById(R.id.tvRulesLevel1);
+
         btnStartLevel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +95,7 @@ public class PreLevel1Activity extends AppCompatActivity {
             System.out.println(fileToUpload);
 
             Call<ResponseBody> call = mApiService.videoColorUpload(fileToUpload);
+            tvPrompt.setText("Please Wait While We Analyze The Room");
 
 
             System.out.println(call);
@@ -106,6 +112,14 @@ public class PreLevel1Activity extends AppCompatActivity {
                         System.out.println("arraylistny");
                         for (int i = 0; i < arrayColors.size(); i++) System.out.println(arrayColors.get(i));
 
+                        if (arrayColors.size() < 2){
+                            tvPrompt.setText("Please Scan the Room Again");
+                        }else {
+                            Intent startLevel1 = new Intent(PreLevel1Activity.this, findColorActivity.class);
+                            startLevel1.putExtra("DetectedColors", arrayColors);
+                            startActivity(startLevel1);
+                        }
+
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -120,10 +134,6 @@ public class PreLevel1Activity extends AppCompatActivity {
                     System.out.println("FAILED");
                 }
             });
-
-
-            Intent startLevel1 = new Intent(PreLevel1Activity.this, findColorActivity.class);
-            startActivity(startLevel1);
         }
     }
 

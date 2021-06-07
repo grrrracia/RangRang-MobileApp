@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".findObjectActivity">
+    tools:context=".findObjectActivity"
+    android:background="@drawable/crowdedbg">
 
     <TextView
         android:id="@+id/tvFindThisObject"
@@ -15,7 +16,8 @@
         android:textAlignment="center"
         android:textSize="55dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btnCheckObject"

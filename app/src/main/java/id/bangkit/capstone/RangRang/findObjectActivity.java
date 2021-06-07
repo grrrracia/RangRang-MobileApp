@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +48,7 @@ import retrofit2.Response;
 public class findObjectActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     Button btnCheck;
+    TextView tvFindThisObject;
 
     Context mContext;
 
@@ -55,24 +57,30 @@ public class findObjectActivity extends AppCompatActivity {
     JSONObject jsonValues;
 
     ArrayList<String> arrayObjects = new ArrayList<String>();
+    ArrayList<String> receivedArrayObjects = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_object);
 
+        btnCheck = findViewById(R.id.btnCheckObject);
+        tvFindThisObject = findViewById(R.id.tvFindThisObject);
         mContext = this;
 
-        btnCheck = findViewById(R.id.btnCheckObject);
+        receivedArrayObjects = (ArrayList<String>) getIntent().getSerializableExtra("DetectedObjects");
 
-        btnCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mApiService = UtilsApi.getAPIService();
-                takePicture();
-
-            }
-        });
+        for (int i = 0; i < receivedArrayObjects.size(); i++) {
+            String currentObject = receivedArrayObjects.get(i);
+            tvFindThisObject.setText(currentObject);
+            btnCheck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mApiService = UtilsApi.getAPIService();
+                    takePicture();
+                }
+            });
+        }
     }
 
     private static final int pic_id = 123;
