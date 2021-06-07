@@ -2,12 +2,16 @@ package id.bangkit.capstone.RangRang;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.loader.content.CursorLoader;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,18 +19,42 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class findColorActivity extends AppCompatActivity {
-//    static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int PERMISSION_CODE = 1000;
-    private static final int IMAGE_CAPTURE_CODE = 1001;
+import id.bangkit.capstone.RangRang.APIHelper.APIInterface;
+import id.bangkit.capstone.RangRang.APIHelper.UtilsApi;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class findColorActivity extends AppCompatActivity {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     Button btnCheck;
+
+    Context mContext;
+
+    APIInterface mApiService;
+    Call<ResponseBody> uploadFile;
+    JSONObject jsonValues;
+
+    ArrayList<String> arrayColors = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,47 +62,127 @@ public class findColorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_color);
 
         btnCheck = findViewById(R.id.btnCheckColor);
+        mContext = this;
 
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mApiService = UtilsApi.getAPIService();
                 takePicture();
-                System.out.println("Receive Signal");
             }
         });
     }
 
+    private static final int pic_id = 123;
+
     private void takePicture() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (checkSelfPermission(Manifest.permission.CAMERA) ==
-                    PackageManager.PERMISSION_DENIED ||
-                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                            PackageManager.PERMISSION_DENIED){
-                //permission not enabled, request it
-                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                //show popup to request permissions
-                requestPermissions(permission, PERMISSION_CODE);
-            }
-            else {
-                //permission already granted
-                openCamera();
-            }
+        MediaController controller = new MediaController(this);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
-        else {
-            //system os < marshmallow
-            openCamera();
-        }
-    }
-    private void openCamera() {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
-        Uri image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        //Camera intent
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            Uri imageUri;
+            imageUri = getImageUri(mContext, imageBitmap);
+            System.out.println(imageUri.getPath());
+            String imageRealPath = getRealPathFromURI(imageUri);
+            System.out.println(imageRealPath);
+
+
+            File file = new File(imageRealPath);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+            System.out.println(fileToUpload);
+
+            Call<ResponseBody> call = mApiService.photoColorUpload(fileToUpload);
+
+
+            System.out.println(call);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    ResponseBody jsonResponse = response.body();
+                    System.out.println("++++++SENT POST++++++++");
+                    try {
+                        String jsonString = response.body().string();
+                        jsonValues = new JSONObject(jsonString);
+                        JSONArray arr_temp = jsonValues.getJSONArray("object");
+                        for (int i = 0; i < arr_temp.length(); i++)
+                            arrayColors.add(arr_temp.getString(i));
+                        System.out.println("arraylistny");
+                        for (int i = 0; i < arrayColors.size(); i++)
+                            System.out.println(arrayColors.get(i));
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    t.getLocalizedMessage();
+                    System.out.println(t.getLocalizedMessage());
+                    System.out.println(t.getMessage());
+                    System.out.println("FAILED");
+                }
+            });
+
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "temporary", null);
+        return Uri.parse(path);
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(mContext, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+    public static void saveBitmap(String path, String bitName, Bitmap mBitmap) {
+
+        File f = new File(Environment.getExternalStorageDirectory()
+                .toString() + "/" + bitName + ".png");
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+        }
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+        try {
+            fOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

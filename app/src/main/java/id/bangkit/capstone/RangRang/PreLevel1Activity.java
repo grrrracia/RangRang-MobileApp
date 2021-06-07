@@ -41,9 +41,8 @@ public class PreLevel1Activity extends AppCompatActivity {
     APIInterface mApiService;
     Call<ResponseBody> uploadFile;
     JSONObject jsonValues;
-//    ArrayList<String> arrayObjects = new ArrayList<String>();
 
-    ArrayList<Object> arrayObjects = new ArrayList<Object>();
+    ArrayList<String> arrayColors = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +89,7 @@ public class PreLevel1Activity extends AppCompatActivity {
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
             System.out.println(fileToUpload);
 
-            Call<ResponseBody> call = mApiService.videoUpload(fileToUpload);
+            Call<ResponseBody> call = mApiService.videoColorUpload(fileToUpload);
 
 
             System.out.println(call);
@@ -102,10 +101,10 @@ public class PreLevel1Activity extends AppCompatActivity {
                     try {
                         String jsonString = response.body().string();
                         jsonValues = new JSONObject(jsonString);
-                        JSONArray arr_temp = jsonValues.getJSONArray("object");
-                        for (int i = 0; i < arr_temp.length(); i++) arrayObjects.add(arr_temp.getString(i));
+                        JSONArray arr_temp = jsonValues.getJSONArray("object"); //Change this later to Color
+                        for (int i = 0; i < arr_temp.length(); i++) arrayColors.add(arr_temp.getString(i));
                         System.out.println("arraylistny");
-                        for (int i = 0; i < arrayObjects.size(); i++) System.out.println(arrayObjects.get(i));
+                        for (int i = 0; i < arrayColors.size(); i++) System.out.println(arrayColors.get(i));
 
 
                     } catch (IOException | JSONException e) {

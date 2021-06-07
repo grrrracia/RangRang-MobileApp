@@ -13,20 +13,25 @@ public interface APIInterface {
 
     @Multipart
     @POST("od-api/video/")
-    Call<ResponseBody> videoUpload(
-//            @Header("Content-Disposition") String contentDisposition,
+    Call<ResponseBody> videoObjectUpload(
             @Part MultipartBody.Part file
     );
 
     @Multipart
     @POST("od-api/picture/")
-    Call<ResponseBody> photoUpload(
-//            @Header("Content-Disposition") String contentDisposition,
+    Call<ResponseBody> photoObjectUpload(
             @Part MultipartBody.Part file
-//            @Part("file") RequestBody file
-            );
-}
+    );
 
-//response = requests.post('http://35.222.141.247:8080/od-api/video/',
-// headers={'Content-Disposition':'Content-Disposition: attachment; filename=test.mp4'},
-// files={'file': finput})
+    @Multipart
+    @POST("cd-api/video/")
+    Call<ResponseBody> videoColorUpload(
+            @Part MultipartBody.Part file
+    );
+
+    @Multipart
+    @POST("cd-api/picture/")
+    Call<ResponseBody> photoColorUpload(
+            @Part MultipartBody.Part file
+    );
+}

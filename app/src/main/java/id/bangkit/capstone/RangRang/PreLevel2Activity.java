@@ -41,9 +41,8 @@ public class PreLevel2Activity extends AppCompatActivity {
     APIInterface mApiService;
     Call<ResponseBody> uploadFile;
     JSONObject jsonValues;
-//    ArrayList<String> arrayObjects = new ArrayList<String>();
 
-    ArrayList<Object> arrayObjects = new ArrayList<Object>();
+    ArrayList<String> arrayObjects = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +89,7 @@ public class PreLevel2Activity extends AppCompatActivity {
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
             System.out.println(fileToUpload);
 
-            Call<ResponseBody> call = mApiService.videoUpload(fileToUpload);
+            Call<ResponseBody> call = mApiService.videoObjectUpload(fileToUpload);
 
 
             System.out.println(call);
