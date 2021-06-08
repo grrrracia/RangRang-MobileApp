@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +48,7 @@ import retrofit2.Response;
 
 public class findColorActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    Button btnCheck;
+    Button btnCheck, btnGoHome;
     TextView tvFindThisColor;
 
     Context mContext;
@@ -59,45 +60,57 @@ public class findColorActivity extends AppCompatActivity {
     ArrayList<String> arrayColors = new ArrayList<String>();
     ArrayList<String> receivedArrayColors = new ArrayList<String>();
 
+    String currentColor = "";
+    Boolean check;
+    int counter = 0;
+
+    private static final int pic_id = 123;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_color);
 
         btnCheck = findViewById(R.id.btnCheckColor);
+        btnGoHome = findViewById(R.id.btnGoHome);
+        btnGoHome.setVisibility(View.GONE);
         tvFindThisColor = findViewById(R.id.tvFindThisColor);
         mContext = this;
 
         receivedArrayColors = (ArrayList<String>) getIntent().getSerializableExtra("DetectedColors");
-        int counter = receivedArrayColors.size() + 1;
 
-        for (int i = 0; i < counter; i++){
-            String currentColor = receivedArrayColors.get(i);
-            tvFindThisColor.setText(currentColor);
+        currentColor = receivedArrayColors.get(counter);
+        System.out.println(currentColor);
+        tvFindThisColor.setText(currentColor);
 
-            btnCheck.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mApiService = UtilsApi.getAPIService();
-                    takePicture();
-//                    if (arrayColors.contains(currentColor)){
-//                        System.out.println("+++++++++++++++CORRECTT++++++++++");
-//                    }else {
-//                        takePicture();
-//                    }
-                }
-            });
-        }
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mApiService = UtilsApi.getAPIService();
+                takePicture();
+            }
+        });
+
     }
 
-    private static final int pic_id = 123;
+    private void validate() {
+        if (arrayColors.contains(currentColor)){
+            System.out.println("_+_+_+_+_+_+_+_+_+_+__AYO GRACE THIS IS THE CORRECT COLOR _++_+_+_+_+_+_+_+_+");
+            System.out.println(counter);
+            counter = counter + 1;
+            arrayColors.clear();
+        }else{
+            counter = counter;
+            arrayColors.clear();
+        }
+    }
 
     private void takePicture() {
         MediaController controller = new MediaController(this);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null){
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }   
+        }
     }
 
     @Override
@@ -131,12 +144,44 @@ public class findColorActivity extends AppCompatActivity {
                     try {
                         String jsonString = response.body().string();
                         jsonValues = new JSONObject(jsonString);
-                        JSONArray arr_temp = jsonValues.getJSONArray("object");//Change to Color Later
+                        JSONArray arr_temp = jsonValues.getJSONArray("color");//Change to Color Later
                         for (int i = 0; i < arr_temp.length(); i++)
                             arrayColors.add(arr_temp.getString(i));
                         System.out.println("arraylistny");
                         for (int i = 0; i < arrayColors.size(); i++)
                             System.out.println(arrayColors.get(i));
+
+                        if (arrayColors.contains(currentColor)) {
+                            System.out.println("_+_+_+_+_+_+_+_+_+_+__CORRECT _++_+_+_+_+_+_+_+_+");
+                            System.out.println(counter);
+                            counter = counter + 1;
+                            arrayColors.clear();
+
+                            if (counter == receivedArrayColors.size()) {
+                                tvFindThisColor.setText("GAME OVER");
+                                btnCheck.setVisibility(View.GONE);
+                                btnGoHome.setVisibility(View.VISIBLE);
+                                btnGoHome.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent goHome = new Intent(findColorActivity.this, MainActivity.class);
+                                        startActivity(goHome);
+                                    }
+                                });
+
+                            }else {
+                                currentColor = receivedArrayColors.get(counter);
+                                System.out.println(currentColor);
+                                tvFindThisColor.setText(currentColor);
+                            }
+
+                        } else {
+                            Toast.makeText(getApplicationContext(),"WRONG PLEASE TRY AGAIN",Toast.LENGTH_SHORT).show();
+                            arrayColors.clear();
+                        }
+
+
+
 
 
                     } catch (IOException | JSONException e) {

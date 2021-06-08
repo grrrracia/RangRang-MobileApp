@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +48,7 @@ import retrofit2.Response;
 
 public class findObjectActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    Button btnCheck;
+    Button btnCheck, btnGoHome;
     TextView tvFindThisObject;
 
     Context mContext;
@@ -59,20 +60,29 @@ public class findObjectActivity extends AppCompatActivity {
     ArrayList<String> arrayObjects = new ArrayList<String>();
     ArrayList<String> receivedArrayObjects = new ArrayList<String>();
 
+    String currentObject = "";
+    Boolean check;
+    int counter = 0;
+
+    private static final int pic_id = 123;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_object);
 
         btnCheck = findViewById(R.id.btnCheckObject);
+        btnGoHome = findViewById(R.id.btnGoHome2);
+        btnGoHome.setVisibility(View.GONE);
         tvFindThisObject = findViewById(R.id.tvFindThisObject);
         mContext = this;
 
         receivedArrayObjects = (ArrayList<String>) getIntent().getSerializableExtra("DetectedObjects");
 
-        for (int i = 0; i < receivedArrayObjects.size(); i++) {
-            String currentObject = receivedArrayObjects.get(i);
-            tvFindThisObject.setText(currentObject);
+        currentObject = receivedArrayObjects.get(counter);
+        System.out.println(currentObject);
+        tvFindThisObject.setText(currentObject);
+
             btnCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -81,9 +91,18 @@ public class findObjectActivity extends AppCompatActivity {
                 }
             });
         }
-    }
 
-    private static final int pic_id = 123;
+    private void validate() {
+        if (arrayObjects.contains(currentObject)){
+            System.out.println("_+_+_+_+_+_+_+_+_+_+__AYO GRACE THIS IS THE CORRECT COLOR _++_+_+_+_+_+_+_+_+");
+            System.out.println(counter);
+            counter = counter + 1;
+            arrayObjects.clear();
+        }else{
+            counter = counter;
+            arrayObjects.clear();
+        }
+    }
 
     private void takePicture() {
         MediaController controller = new MediaController(this);
@@ -129,6 +148,34 @@ public class findObjectActivity extends AppCompatActivity {
                         System.out.println("arraylistny");
                         for (int i = 0; i < arrayObjects.size(); i++) System.out.println(arrayObjects.get(i));
 
+                        if (arrayObjects.contains(currentObject)) {
+                            System.out.println("_+_+_+_+_+_+_+_+_+_+__CORRECT _++_+_+_+_+_+_+_+_+");
+                            System.out.println(counter);
+                            counter = counter + 1;
+                            arrayObjects.clear();
+
+                            if (counter == receivedArrayObjects.size()) {
+                                tvFindThisObject.setText("GAME OVER");
+                                btnCheck.setVisibility(View.GONE);
+                                btnGoHome.setVisibility(View.VISIBLE);
+                                btnGoHome.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent goHome = new Intent(findObjectActivity.this, MainActivity.class);
+                                        startActivity(goHome);
+                                    }
+                                });
+
+                            }else {
+                                currentObject = receivedArrayObjects.get(counter);
+                                System.out.println(currentObject);
+                                tvFindThisObject.setText(currentObject);
+                            }
+
+                        } else {
+                            Toast.makeText(getApplicationContext(),"WRONG PLEASE TRY AGAIN",Toast.LENGTH_SHORT).show();
+                            arrayObjects.clear();
+                        }
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();

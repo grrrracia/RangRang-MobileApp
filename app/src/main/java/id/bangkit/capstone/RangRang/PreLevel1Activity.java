@@ -96,6 +96,7 @@ public class PreLevel1Activity extends AppCompatActivity {
 
             Call<ResponseBody> call = mApiService.videoColorUpload(fileToUpload);
             tvPrompt.setText("Please Wait While We Analyze The Room");
+            btnStartLevel1.setVisibility(View.GONE);
 
 
             System.out.println(call);
@@ -107,13 +108,14 @@ public class PreLevel1Activity extends AppCompatActivity {
                     try {
                         String jsonString = response.body().string();
                         jsonValues = new JSONObject(jsonString);
-                        JSONArray arr_temp = jsonValues.getJSONArray("object"); //Change this later to Color
+                        JSONArray arr_temp = jsonValues.getJSONArray("color"); //Change this later to Color
                         for (int i = 0; i < arr_temp.length(); i++) arrayColors.add(arr_temp.getString(i));
                         System.out.println("arraylistny");
                         for (int i = 0; i < arrayColors.size(); i++) System.out.println(arrayColors.get(i));
 
                         if (arrayColors.size() < 2){
                             tvPrompt.setText("Please Scan the Room Again");
+                            btnStartLevel1.setVisibility(View.VISIBLE);
                         }else {
                             Intent startLevel1 = new Intent(PreLevel1Activity.this, findColorActivity.class);
                             startLevel1.putExtra("DetectedColors", arrayColors);

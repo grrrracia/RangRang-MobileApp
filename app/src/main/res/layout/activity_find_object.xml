@@ -20,6 +20,17 @@
         android:textColor="@color/white"/>
 
     <Button
+        android:id="@+id/btnGoHome2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HOME"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.762" />
+
+    <Button
         android:id="@+id/btnCheckObject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
