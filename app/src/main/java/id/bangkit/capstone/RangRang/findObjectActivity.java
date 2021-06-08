@@ -161,7 +161,7 @@ public class findObjectActivity extends AppCompatActivity {
                                 btnGoHome.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent goHome = new Intent(findObjectActivity.this, MainActivity.class);
+                                        Intent goHome = new Intent(findObjectActivity.this, HomeActivity.class);
                                         startActivity(goHome);
                                     }
                                 });

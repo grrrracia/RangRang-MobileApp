@@ -164,7 +164,7 @@ public class findColorActivity extends AppCompatActivity {
                                 btnGoHome.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent goHome = new Intent(findColorActivity.this, MainActivity.class);
+                                        Intent goHome = new Intent(findColorActivity.this, HomeActivity.class);
                                         startActivity(goHome);
                                     }
                                 });

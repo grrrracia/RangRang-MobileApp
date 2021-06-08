@@ -95,6 +95,7 @@ public class PreLevel2Activity extends AppCompatActivity {
 
             Call<ResponseBody> call = mApiService.videoObjectUpload(fileToUpload);
             tvPrompt.setText("Please Wait While We Analyze the Video");
+            btnStartLevel2.setVisibility(View.GONE);
 
 
             System.out.println(call);
@@ -113,6 +114,7 @@ public class PreLevel2Activity extends AppCompatActivity {
 
                         if (arrayObjects.size() < 2){
                             tvPrompt.setText("Please Scan the Room Again");
+                            btnStartLevel2.setVisibility(View.VISIBLE);
                         }else{
                             Intent startLevel2 = new Intent(PreLevel2Activity.this, findObjectActivity.class);
                             startLevel2.putExtra("DetectedObjects", arrayObjects);
