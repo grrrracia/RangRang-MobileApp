@@ -69,8 +69,9 @@ public class findColorActivity extends AppCompatActivity {
         mContext = this;
 
         receivedArrayColors = (ArrayList<String>) getIntent().getSerializableExtra("DetectedColors");
+        int counter = receivedArrayColors.size() + 1;
 
-        for (int i = 0; i < receivedArrayColors.size(); i++){
+        for (int i = 0; i < counter; i++){
             String currentColor = receivedArrayColors.get(i);
             tvFindThisColor.setText(currentColor);
 
@@ -79,6 +80,11 @@ public class findColorActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     mApiService = UtilsApi.getAPIService();
                     takePicture();
+//                    if (arrayColors.contains(currentColor)){
+//                        System.out.println("+++++++++++++++CORRECTT++++++++++");
+//                    }else {
+//                        takePicture();
+//                    }
                 }
             });
         }
@@ -91,7 +97,7 @@ public class findColorActivity extends AppCompatActivity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null){
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
+        }   
     }
 
     @Override
