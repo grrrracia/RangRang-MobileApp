@@ -203,4 +203,10 @@ public class findObjectActivity extends AppCompatActivity {
         return result;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.isDestroyed();
+    }
+
 }

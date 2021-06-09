@@ -154,4 +154,9 @@ public class PreLevel2Activity extends AppCompatActivity {
 
         }
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.isDestroyed();
+    }
 }
