@@ -93,18 +93,6 @@ public class findColorActivity extends AppCompatActivity {
 
     }
 
-    private void validate() {
-        if (arrayColors.contains(currentColor)){
-            System.out.println("_+_+_+_+_+_+_+_+_+_+__AYO GRACE THIS IS THE CORRECT COLOR _++_+_+_+_+_+_+_+_+");
-            System.out.println(counter);
-            counter = counter + 1;
-            arrayColors.clear();
-        }else{
-            counter = counter;
-            arrayColors.clear();
-        }
-    }
-
     private void takePicture() {
         MediaController controller = new MediaController(this);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
