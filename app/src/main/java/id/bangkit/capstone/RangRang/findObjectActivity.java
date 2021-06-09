@@ -71,6 +71,8 @@ public class findObjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_object);
 
+        getSupportActionBar().hide();
+
         btnCheck = findViewById(R.id.btnCheckObject);
         btnGoHome = findViewById(R.id.btnGoHome2);
         btnGoHome.setVisibility(View.GONE);

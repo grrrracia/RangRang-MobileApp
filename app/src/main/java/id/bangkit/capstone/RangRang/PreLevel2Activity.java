@@ -57,6 +57,8 @@ public class PreLevel2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_level_2);
+        getSupportActionBar().hide();
+
         mContext = this;
         btnStartLevel2 = findViewById(R.id.btnStartLevel2);
         clPreLevel2 = findViewById(R.id.CLPrelevel2);
