@@ -129,7 +129,7 @@ public class PreLevel1Activity extends AppCompatActivity {
                         if (arrayColors.size() < 2){
 //                            tvPrompt.setText("Please Scan the Room Again");
 //                            System.out.println("Lacking items to detect");
-                            Toast.makeText(mContext,"Jumlah Object yang Ditemukan Kurang, Silahkan Rekam Ruangan Lagi",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext,"Jumlah Objek yang Ditemukan Kurang, Silahkan Rekam Ruangan Lagi",Toast.LENGTH_LONG).show();
                             clPreLevel1.setBackgroundResource(R.drawable.rulesbg);
                             llPrelevel1.setVisibility(View.VISIBLE);
                             btnStartLevel1.setVisibility(View.VISIBLE);

@@ -1,11 +1,3 @@
 <resources>
     <string name="app_name">RangRang</string>
-    <string name="level1Rules">Berikut ini yang harus kamu perhatikan selama bermain di RangRang. :<br></br>
-1. Untuk level pemula silahkan klik "Level 1 Mengenal Warna". Pada sesi ini kamu diajak untuk mengenali warna objek di sekitar kamu. <br></br>
-2. Silahkan klik "MULAI REKAM". Rekamlah sekitarmu dengan durasi minimal 2 detik. <br></br>
-3. Setelah itu RangRang akan memberikan list warna dalam Bahasa Inggris yang harus kamu cari. <br></br>
-4. Klik "AMBIL GAMBAR" jika kamu sudah menemukan benda sesuai warna yang RangRang minta yaa. <br></br>
-5. Yeeeeyy.. kamu berhasil! <br></br>
-6. Cobalah ulang kembali permainan Level 1 sampai kamu hafal nama-nama warna dalam Bahasa Inggris. <br></br>
-7. Setelah kamu handal di Level 1, silahkan lanjutkan pada "Level 2 Mengenal Objek" dengan petunjuk permainan yang sama dengan sebelumnya.</string>
 </resources>

@@ -128,7 +128,7 @@ public class PreLevel2Activity extends AppCompatActivity {
 
                         if (arrayObjects.size() < 2){
 //                            tvPrompt.setText("Please Scan the Room Again");
-                            Toast.makeText(mContext,"Jumlah Object yang Ditemukan Kurang, Silahkan Rekam Ruangan Lagi",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext,"Jumlah Objek yang Ditemukan Kurang, Silahkan Rekam Ruangan Lagi",Toast.LENGTH_LONG).show();
                             clPreLevel2.setBackgroundResource(R.drawable.rulesbg);
                             llPrelevel2.setVisibility(View.VISIBLE);
                             btnStartLevel2.setVisibility(View.VISIBLE);
