@@ -1,6 +1,7 @@
 package id.bangkit.capstone.RangRang;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.loader.content.CursorLoader;
 
 import android.content.Context;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +38,9 @@ public class PreLevel1Activity extends AppCompatActivity {
 
     static final int REQUEST_VIDEO_CAPTURE = 1;
 
+    ConstraintLayout clPreLevel1;
+    LinearLayout llPrelevel1;
+
     Button btnStartLevel1;
 
     Context mContext;
@@ -53,6 +59,8 @@ public class PreLevel1Activity extends AppCompatActivity {
         setContentView(R.layout.activity_pre_level_1);
         mContext = this;
         btnStartLevel1 = findViewById(R.id.btnStartLevel1);
+        clPreLevel1 = findViewById(R.id.CLPrelevel1);
+        llPrelevel1 = findViewById(R.id.LLRulesLevel1);
         tvPrompt = findViewById(R.id.tvRulesLevel1);
 
         btnStartLevel1.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +103,10 @@ public class PreLevel1Activity extends AppCompatActivity {
             System.out.println(fileToUpload);
 
             Call<ResponseBody> call = mApiService.videoColorUpload(fileToUpload);
-            tvPrompt.setText("Please Wait While We Analyze The Room");
+//            tvPrompt.setText("Please Wait While We Analyze The Room");
+            clPreLevel1.setBackgroundResource(R.drawable.plswaitbg);
+            llPrelevel1.setVisibility(View.GONE);
+
             btnStartLevel1.setVisibility(View.GONE);
 
 
@@ -108,13 +119,16 @@ public class PreLevel1Activity extends AppCompatActivity {
                     try {
                         String jsonString = response.body().string();
                         jsonValues = new JSONObject(jsonString);
-                        JSONArray arr_temp = jsonValues.getJSONArray("color"); //Change this later to Color
+                        JSONArray arr_temp = jsonValues.getJSONArray("color");
                         for (int i = 0; i < arr_temp.length(); i++) arrayColors.add(arr_temp.getString(i));
                         System.out.println("arraylistny");
                         for (int i = 0; i < arrayColors.size(); i++) System.out.println(arrayColors.get(i));
 
                         if (arrayColors.size() < 2){
-                            tvPrompt.setText("Please Scan the Room Again");
+//                            tvPrompt.setText("Please Scan the Room Again");
+                            System.out.println("Lacking items to detect");
+                            Toast.makeText(getApplicationContext(),"Jumlah Object yang Ditemukan Kurang, Silahkan Rekam Ruangan Lagi",Toast.LENGTH_LONG).show();
+                            clPreLevel1.setBackgroundResource(R.drawable.rulesbg);
                             btnStartLevel1.setVisibility(View.VISIBLE);
                         }else {
                             Intent startLevel1 = new Intent(PreLevel1Activity.this, findColorActivity.class);

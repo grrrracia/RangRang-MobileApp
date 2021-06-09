@@ -114,7 +114,6 @@ public class findObjectActivity extends AppCompatActivity {
             String imageRealPath = getRealPathFromURI(imageUri);
             System.out.println(imageRealPath);
 
-
             File file = new File(imageRealPath);
             RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
@@ -162,7 +161,7 @@ public class findObjectActivity extends AppCompatActivity {
                             }
 
                         } else {
-                            Toast.makeText(getApplicationContext(),"WRONG PLEASE TRY AGAIN",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Objek yang Ditemukan Kurang Tepat",Toast.LENGTH_SHORT).show();
                             arrayObjects.clear();
                         }
 
@@ -186,7 +185,7 @@ public class findObjectActivity extends AppCompatActivity {
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "temporary", null);
         return Uri.parse(path);
     }
@@ -202,31 +201,4 @@ public class findObjectActivity extends AppCompatActivity {
         return result;
     }
 
-    public static void saveBitmap(String path, String bitName, Bitmap mBitmap) {
-
-        File f = new File(Environment.getExternalStorageDirectory()
-                .toString() + "/" + bitName + ".png");
-        try {
-            f.createNewFile();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-        }
-        FileOutputStream fOut = null;
-        try {
-            fOut = new FileOutputStream(f);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-        try {
-            fOut.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            fOut.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

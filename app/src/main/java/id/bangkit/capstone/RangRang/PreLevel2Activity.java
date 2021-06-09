@@ -1,6 +1,7 @@
 package id.bangkit.capstone.RangRang;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.loader.content.CursorLoader;
 
 import android.content.Context;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +38,11 @@ public class PreLevel2Activity extends AppCompatActivity {
 
     static final int REQUEST_VIDEO_CAPTURE = 1;
 
+    ConstraintLayout clPreLevel2;
+    LinearLayout llPrelevel2;
+
     Button btnStartLevel2;
+
     TextView tvPrompt;
 
     Context mContext;
@@ -52,6 +59,8 @@ public class PreLevel2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_pre_level_2);
         mContext = this;
         btnStartLevel2 = findViewById(R.id.btnStartLevel2);
+        clPreLevel2 = findViewById(R.id.CLPrelevel2);
+        llPrelevel2 = findViewById(R.id.LLRulesLevel2);
         tvPrompt = findViewById(R.id.tvRulesLevel2);
 
         btnStartLevel2.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +103,10 @@ public class PreLevel2Activity extends AppCompatActivity {
             System.out.println(fileToUpload);
 
             Call<ResponseBody> call = mApiService.videoObjectUpload(fileToUpload);
-            tvPrompt.setText("Please Wait While We Analyze the Video");
+//            tvPrompt.setText("Please Wait While We Analyze the Video");
+            clPreLevel2.setBackgroundResource(R.drawable.plswaitbg);
+            llPrelevel2.setVisibility(View.GONE);
+
             btnStartLevel2.setVisibility(View.GONE);
 
 
@@ -113,7 +125,9 @@ public class PreLevel2Activity extends AppCompatActivity {
                         for (int i = 0; i < arrayObjects.size(); i++) System.out.println(arrayObjects.get(i));
 
                         if (arrayObjects.size() < 2){
-                            tvPrompt.setText("Please Scan the Room Again");
+//                            tvPrompt.setText("Please Scan the Room Again");
+                            Toast.makeText(getApplicationContext(),"Jumlah Object yang Ditemukan Kurang, Silahkan Rekam Ruangan Lagi",Toast.LENGTH_LONG).show();
+                            clPreLevel2.setBackgroundResource(R.drawable.rulesbg);
                             btnStartLevel2.setVisibility(View.VISIBLE);
                         }else{
                             Intent startLevel2 = new Intent(PreLevel2Activity.this, findObjectActivity.class);
