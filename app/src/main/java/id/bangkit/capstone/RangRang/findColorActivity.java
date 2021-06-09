@@ -81,7 +81,7 @@ public class findColorActivity extends AppCompatActivity {
 
         currentColor = receivedArrayColors.get(counter);
         System.out.println(currentColor);
-        tvFindThisColor.setText(currentColor);
+        tvFindThisColor.setText(currentColor.toUpperCase());
 
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +160,7 @@ public class findColorActivity extends AppCompatActivity {
                             }else {
                                 currentColor = receivedArrayColors.get(counter);
                                 System.out.println(currentColor);
-                                tvFindThisColor.setText(currentColor);
+                                tvFindThisColor.setText(currentColor.toUpperCase());
                             }
 
                         } else {

@@ -11,6 +11,8 @@
         android:id="@+id/tvRulesLevel1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="244dp"
         android:text="peraturan dari level 1"
         app:layout_constraintEnd_toEndOf="parent"

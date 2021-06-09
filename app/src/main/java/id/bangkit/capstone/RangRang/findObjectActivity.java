@@ -81,7 +81,7 @@ public class findObjectActivity extends AppCompatActivity {
 
         currentObject = receivedArrayObjects.get(counter);
         System.out.println(currentObject);
-        tvFindThisObject.setText(currentObject);
+        tvFindThisObject.setText(currentObject.toUpperCase());
 
             btnCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,7 +91,7 @@ public class findObjectActivity extends AppCompatActivity {
                 }
             });
         }
-        
+
 
     private void takePicture() {
         MediaController controller = new MediaController(this);
@@ -158,7 +158,7 @@ public class findObjectActivity extends AppCompatActivity {
                             }else {
                                 currentObject = receivedArrayObjects.get(counter);
                                 System.out.println(currentObject);
-                                tvFindThisObject.setText(currentObject);
+                                tvFindThisObject.setText(currentObject.toUpperCase());
                             }
 
                         } else {
